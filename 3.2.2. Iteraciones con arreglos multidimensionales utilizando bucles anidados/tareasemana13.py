@@ -1,9 +1,3 @@
-""""Crear una matriz 3D que represente los datos de temperaturas diarias en varias ciudades
-Dentro de cada celda de la matriz, puedes almacenar las temperaturas diarias para una ciudad en un día específico de una semana determinada
-Utilizar bucles anidados para calcular el promedio de temperaturas para una ciudad por cada una de las semanas.
-Mostrar el promedio de temperaturas para cada ciudad y semana en la pantalla."""
-
-
 # Crear una matriz 3D para almacenar datos de temperaturas
 # Primera dimensión: Ciudades (3 ciudades)
 # Segunda dimensión: Semanas (4 semanas)
@@ -125,29 +119,87 @@ temperaturas = [
     ]
 ]
 
-# Calcular el promedio de temperaturas para cada ciudad y semana
-for ciudad in temperaturas:
-    for semana in ciudad:
-        suma = 0
-        for dia in semana:
-            suma += dia['temp']
-        print("El promedio será ",suma)
 
+ # Funcion para calcular el promedio de temperatura por semana
+
+def calcular_promedio(ciudad):
+    for semana_index, semana in enumerate(ciudad, start=1):
+            suma = sum(dia["temp"] for dia in semana)
+            promedio = suma / len(semana)
+            print(f"Semana {semana_index}: Promedio de temperatura: {promedio:.2f}")
+# Menu interactivo
 while True:
-    print("Selecciona una ciudad:")
-    print("1. Ciudad 1")
-    print("2. Ciudad 2")
-    print("3. Ciudad 3")
-    print("4. salir")
+    print("seleccione una ciudad ")
+    print("1 - ciudad 1")
+    print("2 - ciudad 2")
+    print("3 - ciudad 3")
+    print("4 - salir ")
 
-    opción= input("ingrese la opcion deseada")
+
+    # Función para calcular el promedio total de temperatura de una ciudad
+    def calcular_promedio_total(ciudad):
+        suma_total = 0
+        num_dias = 0
+        for semana in ciudad:
+            suma_total += sum(dia["temp"] for dia in semana)
+            num_dias += len(semana)
+        promedio_total = suma_total / num_dias
+        return promedio_total
+
+
+    # Menú interactivo
+    while True:
+        print("\nSeleccione una opción:")
+        print("1 - Calcular promedio semanal de temperaturas para una ciudad")
+        print("2 - Calcular promedio total de temperaturas para cada ciudad")
+        print("3 - Salir")
+
+        opcion = input("Ingrese el número de la opción deseada: ")
+
+        if opcion == '1':
+            print("\nSeleccione una ciudad:")
+            print("1 - Ciudad 1")
+            print("2 - Ciudad 2")
+            print("3 - Ciudad 3")
+            ciudad_opcion = input("Ingrese el número de la ciudad: ")
+
+            if ciudad_opcion == '1':
+                print("\nDatos de la Ciudad 1")
+                calcular_promedio_semanal(temperaturas[0])
+            elif ciudad_opcion == '2':
+                print("\nDatos de la Ciudad 2")
+                calcular_promedio_semanal(temperaturas[1])
+            elif ciudad_opcion == '3':
+                print("\nDatos de la Ciudad 3")
+                calcular_promedio_semanal(temperaturas[2])
+            else:
+                print("Ciudad no válida. Por favor, intente de nuevo.")
+
+        elif opcion == '2':
+            print("\nPromedio total de temperaturas para cada ciudad:")
+            for ciudad_index, ciudad in enumerate(temperaturas, start=1):
+                promedio_total = calcular_promedio_total(ciudad)
+                print(f"Ciudad {ciudad_index}: Promedio total de temperatura: {promedio_total:.2f}")
+
+        elif opcion == '3':
+            print("Saliendo del programa...")
+            break
+
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+    opcion = input("ingrese la opcion : ")
     if opcion == "1":
-        ciudad = temperaturas[0]
-        print(ciudad)
-    else:
-        print("No se encuentra la opcion ")
+        calcular_promedio(temperaturas[0])
+    elif opcion == "2":
+        calcular_promedio(temperaturas[1])
+    elif opcion == "3":
+         calcular_promedio(temperaturas[2])
 
 
-    continue
+
+
+
+
 
 
